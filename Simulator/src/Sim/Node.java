@@ -177,8 +177,12 @@ public class Node extends SimEnt {
 			int currentDelay = (int)SimEngine.getTime() - previousMessageTime;
 			this.lastMessageTime = (int)SimEngine.getTime();
 			this.totalDelay += currentDelay;
-			
 		}
+		if (ev instanceof notifySender){
+			notifySender temp = (notifySender)ev;
+			this._toNetwork = temp.getInterface();
+		}
+		
 	}
 	
 	public int sentPackets() {

@@ -37,7 +37,7 @@ public class Run {
 		
 		//Change to interface 4 after 5 messages
 		host2.changeInterfaceCounter(afterMessages, changeInterface);	//Change interface for Host 2 and update the router
-		host1.changeToNetwork(afterMessages, changeInterface);			//after the router is changed... change the senders "toNetwork" value
+		//host1.changeToNetwork(afterMessages, changeInterface);			//after the router is changed... change the senders "toNetwork" value
 				
 		// Generate some traffic
 		// host1 will send 20 messages with time interval 5 to network 2, node 1. Sequence starts with number 1. Generator is CBR.

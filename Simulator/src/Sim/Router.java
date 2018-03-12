@@ -99,6 +99,7 @@ public class Router extends SimEnt{
 			connectInterface(temp.getInterface(), temp.getLink(), temp.getNode()); //Connects to the desired interface
 			//updatedInterface = temp.getInterface();
 			printRouterTable();
+			send(temp.getLink(), new notifySender(temp.getInterface()),0);
 			
 			
 		}
