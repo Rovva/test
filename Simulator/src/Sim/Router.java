@@ -31,10 +31,11 @@ public class Router extends SimEnt{
 	
 	public void connectInterface(int interfaceNumber, SimEnt link, SimEnt node)
 	{
-		this.updatedInterface = interfaceNumber;
+		//this.updatedInterface = interfaceNumber;
 		if (interfaceNumber<_interfaces)
 		{
 			_routingTable[interfaceNumber] = new RouteTableEntry(link, node);
+			
 		}
 		else
 			System.out.println("Trying to connect to port not in router");
@@ -90,14 +91,21 @@ public class Router extends SimEnt{
 		
 		
 		//changeInterface event is triggered which changes the interface in the RouterTable.
-		else if (event instanceof changeInterface) {		
+		else if (event instanceof changeInterface) {	
+			printRouterTable();
 			changeInterface temp = (changeInterface)event;	//Grabs the values from the event
-			
+			//System.out.println("changeInterface: " + temp.getInterface() + " " + temp.getId());
 			//Disconnect the receiver node from it's current position in the routerTable
-			disconnectInterface(temp.getId());				
+			disconnectInterface(temp.getId());
 			
 			connectInterface(temp.getInterface(), temp.getLink(), temp.getNode()); //Connects to the desired interface
+			
+			//Move received to correct network.
+			((Node)_routingTable[temp.getInterface()].node()).getAddr().setNetworkId(temp.getInterface());
+			
+			
 			//updatedInterface = temp.getInterface();
+			System.out.println("CHANGED INTERFACE");
 			printRouterTable();
 			send(temp.getLink(), new notifySender(temp.getInterface()),0);
 			

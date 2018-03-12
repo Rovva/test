@@ -180,7 +180,10 @@ public class Node extends SimEnt {
 		}
 		if (ev instanceof notifySender){
 			notifySender temp = (notifySender)ev;
+			System.out.println("SQUEEEEK");
+			System.out.println(this._id.networkId() + "." + this._id.nodeId());
 			this._toNetwork = temp.getInterface();
+
 		}
 		
 	}
@@ -219,7 +222,7 @@ public class Node extends SimEnt {
 	 * @param newNetworkId The new network to change to.
 	 */
 	public void moveNode(int newNetworkId){
-		this._id.setNetworkId(newNetworkId);
+		//this._id.setNetworkId(newNetworkId);
 		
 		//Creates a changeInterface event which is triggered in the router class
 		send (_peer, new changeInterface(whichInterface, (Link)_peer, this), 0);  
