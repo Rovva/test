@@ -96,20 +96,35 @@ public class Router extends SimEnt{
 			changeInterface temp = (changeInterface)event;	//Grabs the values from the event
 			//System.out.println("changeInterface: " + temp.getInterface() + " " + temp.getId());
 			//Disconnect the receiver node from it's current position in the routerTable
+			int oldNetwork = temp.getNode().getAddr().networkId();
+			int oldNodeID = temp.getNode().getAddr().nodeId();
+			
+					
 			disconnectInterface(temp.getId());
 			
 			connectInterface(temp.getInterface(), temp.getLink(), temp.getNode()); //Connects to the desired interface
 			
 			//Move received to correct network.
 			((Node)_routingTable[temp.getInterface()].node()).getAddr().setNetworkId(temp.getInterface());
-			
-			
 			//updatedInterface = temp.getInterface();
 			System.out.println("CHANGED INTERFACE");
 			printRouterTable();
-			send(temp.getLink(), new notifySender(temp.getInterface()),0);
 			
+			for (int i = 0; i < _routingTable.length; i++) {
 			
+				if(_routingTable[i] != null) {
+					System.out.println("IF " + ((Node)_routingTable[i].node()).getToNetwork() + " ==");
+					System.out.println(oldNetwork);
+					if(((Node)_routingTable[i].node()).getToNetwork() == oldNetwork) {
+						if (((Node)_routingTable[i].node()).getToHost() == oldNodeID) {
+							((Node)_routingTable[i].node()).setToNetwork(temp.getInterface());
+							((Node)_routingTable[i].node()).setToHost(temp.getNode().getAddr().nodeId());
+							//send(temp.getLink(), new notifySender(temp.getInterface()),0);
+						}
+					}
+				}
+
+			}
 		}
 	}
 }

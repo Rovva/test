@@ -228,4 +228,20 @@ public class Node extends SimEnt {
 		send (_peer, new changeInterface(whichInterface, (Link)_peer, this), 0);  
 		
 	}
+	
+	public int getToNetwork() {
+		return this._toNetwork;
+	}
+	
+	public int getToHost() {
+		return this._toHost;
+	}
+	
+	public void setToNetwork(int newToNetwork) {
+		this._toNetwork = newToNetwork;
+	}
+	
+	public void setToHost(int newToHost) {
+		this._toHost = newToHost;
+	}
 }
