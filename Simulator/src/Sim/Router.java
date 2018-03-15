@@ -8,6 +8,7 @@ public class Router extends SimEnt{
 	private int _interfaces;
 	private int _now=0;
 	private int updatedInterface;
+	private HomeAgent homeAgent;
 
 	// When created, number of interfaces are defined
 	
@@ -15,6 +16,7 @@ public class Router extends SimEnt{
 	{
 		_routingTable = new RouteTableEntry[interfaces];
 		_interfaces=interfaces;
+		homeAgent = new HomeAgent();
 	}
 	
 	public void printRouterTable() {
