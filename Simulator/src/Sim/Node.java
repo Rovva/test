@@ -61,6 +61,7 @@ public class Node extends SimEnt {
 	private String generator;	//"CBR", "Gaussian" or "Poisson"
 	public ArrayList<Integer> receivedDelay = new ArrayList<Integer>();	//If needed, keeps track of when a node receives the item.
 	public ArrayList<Integer> sentDelay = new ArrayList<Integer>();		//Stores all the packet delays before they are being sent.
+	private SimEnt homeAgent;
 	
 	
 	/*
@@ -229,6 +230,10 @@ public class Node extends SimEnt {
 		
 	}
 	
+	public void moveMobileNode(Router r, int delay) {
+		send (this, new moveMobile(r),delay);
+	}
+	
 	public int getToNetwork() {
 		return this._toNetwork;
 	}
@@ -243,5 +248,9 @@ public class Node extends SimEnt {
 	
 	public void setToHost(int newToHost) {
 		this._toHost = newToHost;
+	}
+	
+	public void setHomeAgent (Router r) {
+		this.homeAgent = r;
 	}
 }

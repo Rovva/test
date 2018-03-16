@@ -9,6 +9,8 @@ public class Run {
 	{
  		Link link1 = new Link();
 		Link link2 = new Link();
+		Link link3 = new Link();
+		Link link4 = new Link();
 		
  		//Creates two links (maxDelay, lossProbability)
  		//LossyLink link1 = new LossyLink(50, 0);
@@ -29,19 +31,29 @@ public class Run {
 		// side of the link is also provided
 		// Note. A switch is created in same way using the Switch class
 		Router routeNode = new Router(5);
+		Router routeNode2 = new Router(5);
+		
+		host1.setHomeAgent(routeNode);
+		host2.setHomeAgent(routeNode2);
+		
+		
 		routeNode.connectInterface(0, link1, host1);
 		routeNode.connectInterface(1, link2, host2);
+		routeNode.connectInterface(2, link3, routeNode2);
+		routeNode2.connectInterface(2, link3, routeNode);
 		
 		int changeInterface = 4;	//The interface to change to when we order a changeInterface Event.
 		int afterMessages = 5;		//After how many messages the changeInterface Event should be triggered.
 		
 		//Change to interface 4 after 5 messages
-		host2.changeInterfaceCounter(afterMessages, changeInterface);	//Change interface for Host 2 and update the router
+		//host2.changeInterfaceCounter(afterMessages, changeInterface);	//Change interface for Host 2 and update the router
 		//host1.changeToNetwork(afterMessages, changeInterface);			//after the router is changed... change the senders "toNetwork" value
 				
 		// Generate some traffic
 		// host1 will send 20 messages with time interval 5 to network 2, node 1. Sequence starts with number 1. Generator is CBR.
 		host1.StartSending(2, 1, 20, "CBR", 1, 5); 
+		
+		host2.moveMobileNode(routeNode2, 50);
 		
 		//Use Poisson with Lambda 1
 		//host2.StartSending(1, 1, 1000, "Poisson", 10, 1); 
