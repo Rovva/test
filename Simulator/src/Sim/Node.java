@@ -62,6 +62,7 @@ public class Node extends SimEnt {
 	public ArrayList<Integer> receivedDelay = new ArrayList<Integer>();	//If needed, keeps track of when a node receives the item.
 	public ArrayList<Integer> sentDelay = new ArrayList<Integer>();		//Stores all the packet delays before they are being sent.
 	private SimEnt homeAgent;
+	private NetworkAddr homeOfAddress;
 	
 	
 	/*
@@ -179,12 +180,40 @@ public class Node extends SimEnt {
 			this.lastMessageTime = (int)SimEngine.getTime();
 			this.totalDelay += currentDelay;
 		}
+		
 		if (ev instanceof notifySender){
 			notifySender temp = (notifySender)ev;
 			System.out.println("SQUEEEEK");
 			System.out.println(this._id.networkId() + "." + this._id.nodeId());
 			this._toNetwork = temp.getInterface();
 
+		}
+		
+		if (ev instanceof MoveMobile) {
+			System.out.println("MOVE MOBILE TO A NEW ROUTER!!!");
+			MoveMobile temp = (MoveMobile)ev;
+			Router oldRouter = temp.getOldRouter();
+			Router newRouter = temp.getNewRouter();
+			int newInterface = temp.getNewInterface();
+			
+			
+			oldRouter.printRouterTable();
+			System.out.println("Old Router pre-disconnect");
+			oldRouter.disconnectInterface(_id.networkId());
+			
+			oldRouter.printRouterTable();
+			System.out.println("Old Router post-disconnect");
+			
+			
+			newRouter.printRouterTable();
+			
+			newRouter.connectInterface(temp.getNewInterface(), (Link)_peer, this);
+			
+			newRouter.printRouterTable();
+			System.out.println("WE HAVE NOW MOVED? CAN WE SEND, THOUGH?");
+			
+			
+			
 		}
 		
 	}
@@ -230,8 +259,8 @@ public class Node extends SimEnt {
 		
 	}
 	
-	public void moveMobileNode(Router r, int delay) {
-		send (this, new moveMobile(r),delay);
+	public void moveMobileNode(Router oldRouter, Router newRouter, int newInterface, int delay) {
+		send (this, new MoveMobile(oldRouter, newRouter, newInterface), delay);
 	}
 	
 	public int getToNetwork() {
@@ -252,5 +281,6 @@ public class Node extends SimEnt {
 	
 	public void setHomeAgent (Router r) {
 		this.homeAgent = r;
+		this.homeOfAddress = this._id;
 	}
 }

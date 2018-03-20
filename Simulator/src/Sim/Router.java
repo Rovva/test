@@ -9,11 +9,13 @@ public class Router extends SimEnt{
 	private int _now=0;
 	private int updatedInterface;
 	private HomeAgent homeAgent;
+	private int networkID;
 
 	// When created, number of interfaces are defined
 	
-	Router(int interfaces)
+	Router(int networkID, int interfaces)
 	{
+		this.networkID = networkID;
 		_routingTable = new RouteTableEntry[interfaces];
 		_interfaces=interfaces;
 		homeAgent = new HomeAgent();
@@ -83,12 +85,21 @@ public class Router extends SimEnt{
 	
 	public void recv(SimEnt source, Event event){
 		if (event instanceof Message){
-			//((Message) event).destination().setNetworkId(updatedInterface);
-			System.out.println("Router handles packet with seq: " + ((Message) event).seq()+" from node: "+((Message) event).source().networkId()+"." + ((Message) event).source().nodeId() );
-			SimEnt sendNext = getInterface(((Message) event).destination().networkId());
-			System.out.println(((Message) event).destination().networkId());
-			System.out.println("Router sends to node: " + ((Message) event).destination().networkId()+"." + ((Message) event).destination().nodeId());		
-			send (sendNext, event, _now);
+			Message temp = (Message)event;
+			
+			if(this.homeAgent.checkHashMap(temp.destination())) {
+				
+				
+				
+			} else {
+				//((Message) event).destination().setNetworkId(updatedInterface);
+				System.out.println("Router handles packet with seq: " + ((Message) event).seq()+" from node: "+((Message) event).source().networkId()+"." + ((Message) event).source().nodeId() );
+				SimEnt sendNext = getInterface(((Message) event).destination().networkId());
+				System.out.println(((Message) event).destination().networkId());
+				System.out.println("Router sends to node: " + ((Message) event).destination().networkId()+"." + ((Message) event).destination().nodeId());		
+				send (sendNext, event, _now);
+			}
+			
 		}	
 		
 		

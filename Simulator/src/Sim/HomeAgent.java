@@ -15,4 +15,8 @@ public class HomeAgent {
 		agentTable.put(update.getHomeOfAddress(), update.getCareOfAddress());
 	}
 	
+	public boolean checkHashMap(NetworkAddr addr) {
+		return agentTable.containsKey(addr);
+	}
+	
 }
