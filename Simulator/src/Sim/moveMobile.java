@@ -1,16 +1,28 @@
 package Sim;
 
-public class moveMobile implements Event {
+public class MoveMobile implements Event {
 	
-	Router r;
+	Router oldRouter;
+	Router newRouter;
+	int newInterface;
 	
-	
-	public moveMobile(Router r) {
-		this.r = r;
+	public MoveMobile(Router oldRouter, Router newRouter, int newInterface) {
+		this.oldRouter = oldRouter;
+		this.newRouter = newRouter;
+		this.newInterface = newInterface;
 	}
 	
-	public Router getRouter() {
-		return this.r;
+	public Router getOldRouter() {
+		return this.oldRouter;
+	}
+	
+	public Router getNewRouter() {
+		return this.newRouter;
+	}
+	
+	
+	public int getNewInterface() {
+		return this.newInterface;
 	}
 
 	@Override
