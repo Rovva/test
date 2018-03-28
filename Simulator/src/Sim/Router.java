@@ -24,9 +24,12 @@ public class Router extends SimEnt{
 	public void printRouterTable() {
 		for(int i = 0; i <_routingTable.length; i++) {
 			if(_routingTable[i]!=null) {
-				System.out.println("Node: " +((Node)_routingTable[i].node()).getAddr().networkId() + "." + ((Node)_routingTable[i].node()).getAddr().nodeId() + " router interface:" + i);
+				if(_routingTable[i].node() instanceof Node){
+					System.out.println("Node: " +((Node)_routingTable[i].node()).getAddr().networkId() + "." + ((Node)_routingTable[i].node()).getAddr().nodeId() + " router interface:" + i);
+				}else if(_routingTable[i].node() instanceof Router){
+					System.out.println("Router id: " +((Router)_routingTable[i].node()).getNetworkID()  + " on interface:" + i);
+				}
 			}
-			
 		}
 	}
 	
@@ -72,12 +75,26 @@ public class Router extends SimEnt{
 		for(int i=0; i<_interfaces; i++)
 			if (_routingTable[i] != null)
 			{
-				if (((Node) _routingTable[i].node()).getAddr().networkId() == networkAddress)
-				{
-					routerInterface = _routingTable[i].link();
+				
+				if (_routingTable[i].node() instanceof Node) {
+					if (((Node) _routingTable[i].node()).getAddr().networkId() == networkAddress)
+					{
+						routerInterface = _routingTable[i].link();
+					}
 				}
+				else if (_routingTable[i].node() instanceof Router) {
+					if (((Router) _routingTable[i].node()).getNetworkID() == networkAddress)
+					{
+						return _routingTable[i].link();
+					}
+				}
+				
 			}
 		return routerInterface;
+	}
+	
+	public int getNetworkID() {
+		return this.networkID;
 	}
 	
 	

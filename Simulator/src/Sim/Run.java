@@ -39,8 +39,8 @@ public class Run {
 		
 		router1.connectInterface(0, link1, host1);
 		router1.connectInterface(1, link2, host2);
-		//router1.connectInterface(2, link3, router2);
-		//router2.connectInterface(2, link3, router1);
+		router1.connectInterface(2, link3, router2);
+		router2.connectInterface(2, link3, router1);
 		
 		int changeInterface = 4;	//The interface to change to when we order a changeInterface Event.
 		int afterMessages = 5;		//After how many messages the changeInterface Event should be triggered.
@@ -51,7 +51,7 @@ public class Run {
 				
 		// Generate some traffic
 		// host1 will send 20 messages with time interval 5 to network 2, node 1. Sequence starts with number 1. Generator is CBR.
-		host1.StartSending(2, 1, 20, "CBR", 1, 5); 
+		host1.StartSending(1, 2, 20, "CBR", 1, 5); 
 		
 		host2.moveMobileNode(router1, router2, 3, 50);
 		

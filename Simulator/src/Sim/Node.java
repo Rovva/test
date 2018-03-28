@@ -198,17 +198,17 @@ public class Node extends SimEnt {
 			
 			
 			oldRouter.printRouterTable();
-			System.out.println("Old Router pre-disconnect");
 			oldRouter.disconnectInterface(_id.networkId());
 			
+			System.out.println("*** PRINT OLD ROUTER TABLE ***");
 			oldRouter.printRouterTable();
-			System.out.println("Old Router post-disconnect");
-			
-			
+
+			this._id.setNetworkId(newRouter.getNetworkID());
+			System.out.println("*** PRINT NEW ROUTER TABLE ***");
 			newRouter.printRouterTable();
-			
+			System.out.println("*** MOVING NODE TO NEW ROUTER TABLE... ***");
 			newRouter.connectInterface(temp.getNewInterface(), (Link)_peer, this);
-			
+			System.out.println("*** PRINT NEW ROUTER TABLE WITH NEW NODE ***");
 			newRouter.printRouterTable();
 			System.out.println("WE HAVE NOW MOVED? CAN WE SEND, THOUGH?");
 			
