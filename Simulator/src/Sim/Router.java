@@ -103,15 +103,22 @@ public class Router extends SimEnt{
 	public void recv(SimEnt source, Event event){
 		if (event instanceof Message){
 			Message temp = (Message)event;
+			SimEnt sendNext;
+			
+			System.out.println("THIS IS THE COA: " + this.homeAgent.getCOA(temp.destination()));
 			
 			if(this.homeAgent.checkHashMap(temp.destination())) {
 				
-				
+				NetworkAddr COA = this.homeAgent.getCOA(temp.destination());
+				((Message) event).setDestination(COA);
+				sendNext = getInterface(COA.networkId());
+				System.out.println("Home Agent forwards to: " + COA.networkId()+"." + COA.nodeId());
+				send (sendNext, event, _now);
 				
 			} else {
 				//((Message) event).destination().setNetworkId(updatedInterface);
 				System.out.println("Router handles packet with seq: " + ((Message) event).seq()+" from node: "+((Message) event).source().networkId()+"." + ((Message) event).source().nodeId() );
-				SimEnt sendNext = getInterface(((Message) event).destination().networkId());
+				sendNext = getInterface(((Message) event).destination().networkId());
 				System.out.println(((Message) event).destination().networkId());
 				System.out.println("Router sends to node: " + ((Message) event).destination().networkId()+"." + ((Message) event).destination().nodeId());		
 				send (sendNext, event, _now);

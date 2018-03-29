@@ -19,4 +19,9 @@ public class HomeAgent {
 		return agentTable.containsKey(addr);
 	}
 	
+	public NetworkAddr getCOA(NetworkAddr HOA) {
+		return agentTable.get(HOA);
+		
+	}
+	
 }
