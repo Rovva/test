@@ -128,10 +128,15 @@ public class Router extends SimEnt{
 				send (sendNext, event, _now);
 			}
 		}
+		if(event instanceof AddressUpdate) {
+			AddressUpdate temp = (AddressUpdate)event;
+			updateHA(temp.getHomeOfAddress(), temp.getCareOfAddress());
+			System.out.println("hmm");
+		}
 		
 		
 		//changeInterface event is triggered which changes the interface in the RouterTable.
-		else if (event instanceof changeInterface) {	
+		if (event instanceof changeInterface) {	
 			printRouterTable();
 			changeInterface temp = (changeInterface)event;	//Grabs the values from the event
 			//System.out.println("changeInterface: " + temp.getInterface() + " " + temp.getId());

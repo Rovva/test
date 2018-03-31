@@ -212,7 +212,8 @@ public class Node extends SimEnt {
 			System.out.println("WE HAVE NOW MOVED? CAN WE SEND, THOUGH?");
 			NetworkAddr oldID = new NetworkAddr(oldRouter.getNetworkID(), _id.nodeId());
 			NetworkAddr newID = new NetworkAddr(newRouter.getNetworkID(), _id.nodeId());
-			oldRouter.updateHA(oldID, newID);
+			updateRouterHA(oldID, newID);
+			//oldRouter.updateHA(oldID, newID);
 			//oldRouter.homeAgent.agentTable.put(oldID, newID);
 			/*oldRouter.homeAgent.agentTable.put(oldRouter.getNetworkID() +
 					"." + _id.nodeId(), newRouter.getNetworkID() +
@@ -251,6 +252,10 @@ public class Node extends SimEnt {
 		
 		this.toNetworkCounter = count+1;
 		this.toWhichNetwork = whichInterface;
+	}
+	
+	public void updateRouterHA(NetworkAddr oldID, NetworkAddr newID) {
+		send(homeAgent, new AddressUpdate(oldID, newID), 0);
 	}
 	
 	/*
