@@ -8,7 +8,7 @@ public class Router extends SimEnt{
 	private int _interfaces;
 	private int _now=0;
 	private int updatedInterface;
-	public HomeAgent homeAgent;
+	private HomeAgent homeAgent;
 	private int networkID;
 
 	// When created, number of interfaces are defined
@@ -96,6 +96,10 @@ public class Router extends SimEnt{
 		return this.networkID;
 	}
 	
+	public void updateHA(NetworkAddr oldID, NetworkAddr newID) {
+		this.homeAgent.addressUpdate(oldID, newID);
+	}
+	
 	
 	// When messages are received at the router this method is called
 	
@@ -123,8 +127,7 @@ public class Router extends SimEnt{
 				System.out.println("Router sends to node: " + ((Message) event).destination().networkId()+"." + ((Message) event).destination().nodeId());		
 				send (sendNext, event, _now);
 			}
-			
-		}	
+		}
 		
 		
 		//changeInterface event is triggered which changes the interface in the RouterTable.

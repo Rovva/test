@@ -202,7 +202,6 @@ public class Node extends SimEnt {
 			
 			System.out.println("*** PRINT OLD ROUTER TABLE ***");
 			oldRouter.printRouterTable();
-
 			this._id.setNetworkId(newRouter.getNetworkID());
 			System.out.println("*** PRINT NEW ROUTER TABLE ***");
 			newRouter.printRouterTable();
@@ -211,9 +210,13 @@ public class Node extends SimEnt {
 			System.out.println("*** PRINT NEW ROUTER TABLE WITH NEW NODE ***");
 			newRouter.printRouterTable();
 			System.out.println("WE HAVE NOW MOVED? CAN WE SEND, THOUGH?");
-			oldRouter.homeAgent.agentTable.put(oldRouter.getNetworkID() +
+			NetworkAddr oldID = new NetworkAddr(oldRouter.getNetworkID(), _id.nodeId());
+			NetworkAddr newID = new NetworkAddr(newRouter.getNetworkID(), _id.nodeId());
+			oldRouter.updateHA(oldID, newID);
+			//oldRouter.homeAgent.agentTable.put(oldID, newID);
+			/*oldRouter.homeAgent.agentTable.put(oldRouter.getNetworkID() +
 					"." + _id.nodeId(), newRouter.getNetworkID() +
-					"." + _id.nodeId());
+					"." + _id.nodeId());*/
 			
 			
 		}
