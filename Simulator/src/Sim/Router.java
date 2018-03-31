@@ -8,7 +8,7 @@ public class Router extends SimEnt{
 	private int _interfaces;
 	private int _now=0;
 	private int updatedInterface;
-	private HomeAgent homeAgent;
+	public HomeAgent homeAgent;
 	private int networkID;
 
 	// When created, number of interfaces are defined
@@ -64,7 +64,6 @@ public class Router extends SimEnt{
 		return oldInterface;
 	}
 	
-
 	// This method searches for an entry in the routing table that matches
 	// the network number in the destination field of a messages. The link
 	// represents that network number is returned
@@ -105,7 +104,8 @@ public class Router extends SimEnt{
 			Message temp = (Message)event;
 			SimEnt sendNext;
 			
-			System.out.println("THIS IS THE COA: " + this.homeAgent.getCOA(temp.destination()));
+			//System.out.println("THIS IS THE COA: " + homeAgent.getCOA(temp.destination()));
+			//System.out.println(this.homeAgent.checkHashMap(temp.destination()));
 			
 			if(this.homeAgent.checkHashMap(temp.destination())) {
 				

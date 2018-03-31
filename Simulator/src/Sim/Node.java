@@ -211,7 +211,9 @@ public class Node extends SimEnt {
 			System.out.println("*** PRINT NEW ROUTER TABLE WITH NEW NODE ***");
 			newRouter.printRouterTable();
 			System.out.println("WE HAVE NOW MOVED? CAN WE SEND, THOUGH?");
-			
+			oldRouter.homeAgent.agentTable.put(oldRouter.getNetworkID() +
+					"." + _id.nodeId(), newRouter.getNetworkID() +
+					"." + _id.nodeId());
 			
 			
 		}
